@@ -1,7 +1,8 @@
 const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
-//将打包到js里的css文件进行一个拆分,单独提取css
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
+//将打包到js里的css文件进行一个拆分,单独提取css（不适用webpack4）
+// const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 // 打包前先清空
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
@@ -35,26 +36,15 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        }) //从右向左解析
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
       },
-      // {
-      //   test: /\.css$/,
-      //   use: ['style-loader', 'css-loader']
-      // },
       {
         test: /\.less$/,
-        use: [
-          'style-loader', //将js文件中的样式应用到dom中
-          'css-loader', //将css编译到js文件中
-          'less-loader' //将less编译成css
-        ]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|eot|ttf|woff)$/,
@@ -84,11 +74,14 @@ const config = {
       }
     }),
     new HTMLPlugin({
-      // 在src目录下创建一个index.html页面当做模板来用
       template: './src/index.html',
       // hash: true, // 会在打包好的bundle.js后面加上hash串
     }),
-    new ExtractTextPlugin('css/style.css'), // 单独提取css
+    // 单独提取css
+    new MiniCssExtractPlugin({
+      filename: "css/style.css",
+      chunkFilename: "[id].css"
+    }),
     new CleanWebpackPlugin(),
     new webpack.NamedModulesPlugin(), // 打印更新的模块路径
     new webpack.HotModuleReplacementPlugin() // 热更新
