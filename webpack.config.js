@@ -88,8 +88,10 @@ const config = {
       template: './src/index.html',
       // hash: true, // 会在打包好的bundle.js后面加上hash串
     }),
-    new ExtractTextPlugin('css/style.css'),
-    new CleanWebpackPlugin()
+    new ExtractTextPlugin('css/style.css'), // 单独提取css
+    new CleanWebpackPlugin(),
+    new webpack.NamedModulesPlugin(), // 打印更新的模块路径
+    new webpack.HotModuleReplacementPlugin() // 热更新
   ],
   resolve: {
     // 别名
