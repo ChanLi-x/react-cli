@@ -3,7 +3,7 @@ import React from 'react'
 const Home = () => {
   return (
     <div>
-      <h1>home页</h1>
+      <div>home页</div>
     </div>
   )
 }
