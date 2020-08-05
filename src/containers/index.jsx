@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { dataAction } from '../action/index'
+import * as dataAction from '../action/index'
 import Home from './home'
 import '../styles/index.less'
 
-const Index = () => {
+const Index = (props) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -14,6 +14,8 @@ const Index = () => {
       setLoading(false)
     },1000)
   }, [])
+
+  console.log('props', props)
 
   return (
     <div>
@@ -32,7 +34,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({data: dataAction},dispatch),
+    actions: bindActionCreators(dataAction,dispatch),
   }
 }
 
