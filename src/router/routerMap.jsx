@@ -6,13 +6,13 @@ import {
 import { hot } from 'react-hot-loader/root'
 import Index from '../containers/index.jsx'
 import Home from '../containers/home.jsx'
-import List from '../containers/list.jsx'
+import Login from '../containers/Login.jsx'
 
 const RouterMap = () => (
   <Router>
     <Route exact path='/' component={Index} />
     <Route path='/home' component={Home} />
-    <Route path='/list' component={List} />
+    <Route path='/login' component={Login} />
   </Router>
 )
 
